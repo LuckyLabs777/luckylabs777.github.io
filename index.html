@@ -1,210 +1,255 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#000400">
-  <meta name="color-scheme" content="dark">
-  <meta name="robots" content="noindex,nofollow">
-  <meta name="description" content="LuckyLabs777">
-  <title>LuckyLabs777</title>
-  <style>
-    :root { color-scheme: dark; --code: #a9ffbb; --dim: #65b77f; }
-    *,*::before,*::after {box-sizing:border-box}
-    html,body {width:100%;min-height:100%;margin:0;background:#000400;overflow:hidden}
-    body {font-family:Consolas,"SFMono-Regular","Courier New",monospace;color:var(--code)}
-    main {height:100vh;height:100svh;position:relative;overflow:hidden;isolation:isolate;background:#000400}
-    #rain {position:absolute;inset:0;display:block;width:100%;height:100%;z-index:0}
-    .veil {position:absolute;inset:0;z-index:1;pointer-events:none;background:
-      radial-gradient(ellipse at center,rgba(0,1,0,.02) 0%,rgba(0,1,0,.12) 55%,rgba(0,0,0,.58) 100%),
-      linear-gradient(0deg,rgba(0,4,0,.55),transparent 20%,transparent 80%,rgba(0,4,0,.32));}
-    .center {position:absolute;inset:0;z-index:2;display:grid;place-items:center;padding:18px;pointer-events:none}
-    .insignia {position:relative;isolation:isolate;margin:0;max-width:100%;font-size:clamp(16px,2.3vw,30px);font-weight:500;letter-spacing:clamp(.21em,1.25vw,.48em);text-indent:clamp(.21em,1.25vw,.48em);text-align:center;line-height:1.5;white-space:nowrap;color:rgba(233,255,236,.88);text-shadow:0 0 11px #00aa38,0 0 45px #007120;opacity:0;animation:reveal 2.4s cubic-bezier(.18,.8,.27,1) 1.55s forwards}
-    .insignia::before {content:"";position:absolute;z-index:-1;inset:-25px -34px;background:radial-gradient(ellipse at center,rgba(0,2,0,.77),rgba(0,2,0,.39) 39%,transparent 77%);pointer-events:none}
-    .insignia span {color:#acffc4}
-    @keyframes reveal {from{opacity:0;filter:blur(14px);transform:scale(1.028)}to{opacity:1;filter:blur(0);transform:scale(1)}}
-    .footer {position:absolute;z-index:3;left:clamp(17px,3.3vw,49px);right:clamp(17px,3.3vw,49px);bottom:clamp(19px,3.2vw,37px);display:flex;justify-content:space-between;align-items:end;gap:18px;opacity:0;animation:foot 1.8s ease 2.75s forwards}
-    @keyframes foot {to{opacity:1}}
-    .tag {display:block;font-size:10px;letter-spacing:.29em;line-height:1.7;color:rgba(131,235,155,.57);text-shadow:0 0 8px #036a24}
-    #signal-id {display:block;margin-top:4px;font-size:clamp(12px,1.05vw,15px);letter-spacing:.15em;line-height:1.6;color:#cbffda;font-variant-numeric:tabular-nums;text-shadow:0 0 18px rgba(0,225,77,.55)}
-    button {padding:11px 13px;border:1px solid rgba(78,171,99,.32);border-radius:0;color:rgba(178,255,197,.75);background:rgba(0,9,3,.46);font:inherit;font-size:10px;letter-spacing:.24em;cursor:pointer;transition:border-color .2s ease,color .2s ease,background .2s ease}
-    button:hover,button:focus-visible {color:#e4ffec;border-color:#9cffba;background:rgba(2,36,11,.72)}
-    button:focus-visible {outline:2px solid #9cffba;outline-offset:4px}
-    .sr {position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
-    @media(max-width:480px) {
-      .insignia {font-size:clamp(15px,5vw,22px);letter-spacing:.14em;text-indent:.14em}
-      .tag,button {font-size:9px}
-      #signal-id {font-size:12px;letter-spacing:.08em}
-    }
-    @media(prefers-reduced-motion:reduce){.insignia,.footer{opacity:1;animation:none;filter:none;transform:none}button{transition:none}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#000400">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="LuckyLabs777">
+<meta name="lucky-release" content="cinematic-v0.7">
+<title>LuckyLabs777</title>
+<style>
+:root{color-scheme:dark;--phosphor:#a4ffc0;--glow:#1eff76}
+*,*::before,*::after{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#000400}
+body{color:var(--phosphor);font-family:"Courier New",Consolas,monospace}
+main{position:relative;width:100%;height:100vh;height:100svh;overflow:hidden;isolation:isolate;background:#000400}
+#rain,#tunnel{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
+#rain{z-index:1;opacity:0;transform-origin:50% 50%;will-change:transform,opacity}
+#tunnel{z-index:3;opacity:0;mix-blend-mode:screen}
+.veil{z-index:4;position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,rgba(0,0,0,.02) 8%,rgba(0,0,0,.40) 100%)}
+.scan{z-index:5;position:absolute;inset:0;pointer-events:none;opacity:.10;background:repeating-linear-gradient(180deg,transparent 0,transparent 3px,rgba(0,0,0,.48) 4px)}
+.terminal{position:absolute;top:clamp(70px,21vh,218px);left:clamp(23px,9vw,156px);right:20px;z-index:8;
+ font-size:clamp(15px,2.15vw,26px);line-height:1.64;font-weight:600;letter-spacing:.005em;
+ color:#a4ffc0;text-shadow:0 0 2px rgba(31,251,110,.48),0 0 11px rgba(9,202,74,.42);opacity:1;
+ overflow-wrap:anywhere;max-width:min(80vw,1050px)}
+.line{margin:0;min-height:1.64em;white-space:pre-wrap}
+.line:nth-child(3){margin-top:0}
+.cursor{display:inline-block;vertical-align:-.12em;width:.59em;height:.98em;background:#a4ffc0;box-shadow:0 0 13px rgba(25,255,109,.65);animation:blink .86s steps(2,end) infinite}
+@keyframes blink{50%{opacity:0}}
+.cursor[hidden]{display:none}
+.numbers{z-index:7;position:absolute;inset:0;display:grid;place-items:center;opacity:0;pointer-events:none}
+.digits{display:flex;gap:clamp(1px,.5vw,9px);align-items:center;justify-content:center;white-space:nowrap;
+ font-size:clamp(24px,5.4vw,76px);font-variant-numeric:tabular-nums;line-height:1;color:#b5ffcc;
+ text-shadow:0 0 8px #13b955,0 0 23px rgba(11,188,70,.62);will-change:transform}
+.digit{display:block;text-align:center;min-width:.56em;filter:blur(1.1px);opacity:.82}
+.digit.locked{filter:none;opacity:1;color:#ebfff0;text-shadow:0 0 13px #24ff80,0 0 27px #158a40}
+.wordmark-wrap{position:absolute;inset:0;z-index:10;pointer-events:none;display:grid;place-items:center;padding:18px}
+.wordmark{position:relative;margin:0;max-width:100%;white-space:nowrap;text-align:center;line-height:1.45;
+ font-size:clamp(18px,2.5vw,35px);font-weight:500;letter-spacing:clamp(.12em,.9vw,.34em);
+ color:#e5ffea;text-shadow:0 0 14px #2add6b,0 0 46px rgba(0,141,56,.75);
+ opacity:0;filter:blur(15px);transform:scale(.92);transition:opacity 3.33s ease,filter 3.33s ease,transform 3.33s cubic-bezier(.17,.73,.31,1)}
+.wordmark.visible{opacity:1;filter:none;transform:scale(1)}
+.wordmark span{color:#b2ffcb}
+.wordmark::before{content:"";position:absolute;z-index:-1;left:-23%;right:-23%;top:-170%;bottom:-170%;background:radial-gradient(ellipse,rgba(0,6,2,.92),rgba(0,3,1,.57) 40%,transparent 73%)}
+.skip{position:absolute;z-index:20;left:-10000px;top:12px;background:#001905;color:#d5ffe0;border:1px solid #a8ffc2;padding:11px 13px;font:inherit}
+.skip:focus-visible{left:12px;outline:2px solid white;outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden;white-space:nowrap}
+@media(max-width:560px){.terminal{top:clamp(60px,24vh,180px);left:clamp(17px,6vw,25px);right:17px;font-size:clamp(13px,3.45vw,18px);max-width:none}.digits{font-size:clamp(21px,7vw,40px);gap:1px}.digit{min-width:.53em}
+.wordmark{font-size:clamp(17px,4.55vw,23px);letter-spacing:.10em}}
+@media(max-width:340px){.terminal{font-size:12px}.wordmark{font-size:15px;letter-spacing:.07em}}
+@media(prefers-reduced-motion:reduce){.wordmark{opacity:1!important;filter:none!important;transform:none!important;transition:none!important}
+#rain,#tunnel,.terminal,.numbers,.cursor{display:none!important}}
+</style>
 </head>
 <body>
-  <main aria-label="LuckyLabs777 digital entrance">
-    <canvas id="rain" aria-hidden="true"></canvas>
-    <div class="veil" aria-hidden="true"></div>
-    <div class="center"><h1 class="insignia">LUCKYLABS<span>777</span></h1></div>
-    <div class="footer">
-      <div aria-live="off"><span class="tag">VISITOR SIGNAL</span><output id="signal-id">—</output></div>
-      <button id="reseed" type="button" aria-label="Generate a new temporary visitor signal">RESEED ↻</button>
-    </div>
-    <p class="sr">An animated field of cascading green characters. The visitor signal is a random temporary identifier, not an IP address or fingerprint. It is generated in this browser and is not stored or sent by this page.</p>
-  </main>
-  <script>
-  (() => {
-    'use strict';
-    const canvas = document.getElementById('rain');
-    const ctx = canvas.getContext('2d', {alpha:false});
-    const display = document.getElementById('signal-id');
-    const reset = document.getElementById('reseed');
-    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const glyphs = Array.from('0123456789ABCDEFGHJKLMNPQRSTVWXYZｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝ');
-    const styles = [
-      {size:13,step:16,density:.70,velocity:[45,89],length:[16,37],opacity:.45},
-      {size:19,step:23,density:.88,velocity:[86,148],length:[24,49],opacity:.90},
-      {size:27,step:48,density:.52,velocity:[114,190],length:[15,34],opacity:.63}
-    ];
-    const colors = ['#05240e','#095c24','#148b38','#21b84b','#4be979','#a4ffc0','#effff0'];
-    let token = '', tokenChars = '', streams = [], atlases = [], raf = 0;
-    let W = 1, H = 1, dpr = 1, prev = 0, frameBucket = 0, running = false, pendingResize = false;
-
-    function randInt(n) {
-      if (!n || n < 1) return 0;
-      return Math.floor(Math.random()*n); // animation only; not used for visitor token
-    }
-    function range(a,b) {return a+Math.random()*(b-a)}
-    function makeToken() {
-      const bytes = new Uint8Array(6);
-      if (crypto && typeof crypto.getRandomValues === 'function') crypto.getRandomValues(bytes);
-      else { for(let i=0;i<bytes.length;i++) bytes[i]=randInt(256); }
-      const text=Array.from(bytes,b=>b.toString(16).toUpperCase().padStart(2,'0')).join('');
-      token = text.match(/.{4}/g).join('-');
-      tokenChars = text;
-      display.textContent = token;
-    }
-    // Render each glyph once into original sprite atlases, rather than running
-    // thousands of shadow-blurred fillText operations every animation frame.
-    function buildAtlas(size) {
-      const pad = Math.ceil(size*.43), tileW = Math.ceil(size*1.23)+pad*2;
-      const tileH = Math.ceil(size*1.23)+pad*2, n = glyphs.length;
-      const a = document.createElement('canvas');
-      a.width = tileW*n;
-      a.height = tileH*colors.length*2;
-      const c = a.getContext('2d');
-      c.textAlign = 'center'; c.textBaseline='middle';
-      c.font = `500 ${size}px "Yu Gothic","Meiryo","Noto Sans CJK JP",monospace`;
-      for(let flipped=0;flipped<2;flipped++){
-        for(let level=0;level<colors.length;level++){
-          for(let gi=0;gi<n;gi++){
-            const x=gi*tileW+tileW/2, y=(flipped*colors.length+level)*tileH+tileH/2;
-            c.save(); c.translate(x,y);
-            if(flipped && /[\uFF61-\uFF9F]/.test(glyphs[gi])) c.scale(-1,1);
-            c.fillStyle=colors[level];
-            if(level>3) {c.shadowColor=colors[level]; c.shadowBlur=level===6?size*.73:size*.44;}
-            c.fillText(glyphs[gi],0,0);
-            c.restore();
-          }
-        }
-      }
-      return {canvas:a,tileW,tileH};
-    }
-    function rebuild() {
-      const rect=canvas.getBoundingClientRect();
-      W=Math.max(1,rect.width); H=Math.max(1,rect.height);
-      dpr=Math.min(window.devicePixelRatio||1, W<=480?1.5:1.35);
-      canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);
-      ctx.setTransform(dpr,0,0,dpr,0,0);
-      ctx.fillStyle='#000400';ctx.fillRect(0,0,W,H);
-      atlases=styles.map(style=>buildAtlas(style.size));
-      streams=[];
-      for(let layer=0;layer<styles.length;layer++){
-        const s=styles[layer], count=Math.ceil(W/s.step)+1;
-        for(let col=0;col<count;col++){
-          if(Math.random()>s.density) continue;
-          const len=Math.round(range(...s.length));
-          const slot=Array.from({length:len+6},()=>randInt(glyphs.length));
-          streams.push({layer, size:s.size, opacity:s.opacity,
-            x:col*s.step+range(-s.step*.22,s.step*.22),
-            head:range(-H*.5,H*1.7),velocity:range(...s.velocity),
-            len,slot,mirror:Math.random()>.36,seed:randInt(65535),
-            beacon:false});
-        }
-      }
-      // One brighter column incorporates the per-visitor hex signal into the rain.
-      const beacon=streams.filter(s=>s.layer===1).sort((a,b)=>Math.abs(a.x-W*.66)-Math.abs(b.x-W*.66))[0];
-      if(beacon){beacon.beacon=true;beacon.opacity=1;beacon.len=Math.max(32,beacon.len)}
-      if(motion.matches) drawStill();
-    }
-    function drawSprite(stream,glyphIndex,brightness,x,y,alpha) {
-      const atlas=atlases[stream.layer];
-      const frame=(stream.mirror?colors.length:0)+brightness;
-      ctx.globalAlpha=alpha;
-      ctx.drawImage(atlas.canvas,glyphIndex*atlas.tileW,frame*atlas.tileH,
-        atlas.tileW,atlas.tileH,x-atlas.tileW/2,y-atlas.tileH/2,atlas.tileW,atlas.tileH);
-    }
-    function glyphIndex(symbol) { const i=glyphs.indexOf(symbol);return i>=0?i:0; }
-    function paint(frozen=false) {
-      ctx.globalAlpha=1;ctx.fillStyle='#000400';ctx.fillRect(0,0,W,H);
-      for(const s of streams) {
-        const headRow=Math.floor(s.head/s.size);
-        const len=s.len;
-        for(let j=len-1;j>=0;j--){
-          const y=(headRow-j)*s.size;
-          if(y < -s.size || y > H+s.size) continue;
-          const progress=1-j/len;
-          let shade=progress>.985?6:progress>.92?5:progress>.71?4:progress>.48?3:progress>.20?2:1;
-          let opacity=s.opacity * (progress*.78+.09);
-          if(j===0) opacity=s.opacity;
-          if(s.layer===0) shade=Math.min(shade,4);
-          let gi=s.slot[(headRow-j+s.slot.length*1000)%s.slot.length];
-          // This is not an IP address; it is the temporary 48-bit browser token.
-          if(s.beacon && j>=4 && j<16) {
-            gi=glyphIndex(tokenChars[j-4]);
-            shade=Math.max(shade,3);
-            opacity=Math.min(1,opacity*1.35);
-          }
-          drawSprite(s,gi,shade,s.x,y,opacity);
-        }
-      }
-      ctx.globalAlpha=1;
-    }
-    function drawStill(){
-      for(const s of streams) s.head=H*.94+range(-H*.65,H*.36);
-      paint(true);
-    }
-    function tick(time) {
-      raf=requestAnimationFrame(tick);
-      if(document.hidden || motion.matches) {prev=0;return}
-      if(prev && time-prev<31) return;
-      const dt=prev?Math.min(.065,(time-prev)/1000):.033;
-      prev=time;
-      frameBucket++;
-      for(const s of streams){
-        s.head += dt*s.velocity;
-        if(s.head-s.len*s.size>H+110){
-          s.head=-range(s.size*3,H*.9);
-          s.velocity=range(...styles[s.layer].velocity);
-        }
-        if(frameBucket%4===0){const n=randInt(s.slot.length);s.slot[n]=randInt(glyphs.length)}
-      }
-      paint();
-    }
-    function start() {if(!running){running=true;prev=0;raf=requestAnimationFrame(tick)}}
-    function stop() {if(running){cancelAnimationFrame(raf);running=false;prev=0}}
-    function restart() {makeToken();rebuild();if(!motion.matches)start()}
-    reset.addEventListener('click',restart);
-    window.addEventListener('resize',()=>{
-      if(pendingResize)return;
-      pendingResize=true;
-      requestAnimationFrame(()=>{pendingResize=false;rebuild()});
-    },{passive:true});
-    if(motion.addEventListener) motion.addEventListener('change',()=>{if(motion.matches){stop();drawStill()}else{rebuild();start()}});
-    else if(motion.addListener) motion.addListener(()=>{if(motion.matches){stop();drawStill()}else{rebuild();start()}});
-    document.addEventListener('visibilitychange',()=>{prev=0});
-    window.addEventListener('pagehide',stop,{once:true});
-    makeToken();
-    if(ctx){rebuild();if(!motion.matches)start()}
-  })();
-  </script>
+<main aria-label="LuckyLabs777 cinematic entrance">
+  <canvas id="rain" aria-hidden="true"></canvas>
+  <canvas id="tunnel" aria-hidden="true"></canvas>
+  <div class="veil" aria-hidden="true"></div><div class="scan" aria-hidden="true"></div>
+  <section class="terminal" id="terminal" aria-label="Cinematic terminal dialogue">
+    <p class="line" id="line0"></p><p class="line" id="line1"></p><p class="line" id="line2"></p>
+  </section>
+  <div class="numbers" id="numbers" aria-hidden="true"><div class="digits" id="digits"></div></div>
+  <div class="wordmark-wrap"><h1 class="wordmark" id="wordmark">LUCKYLABS<span>777</span></h1></div>
+  <button class="skip" id="skip" type="button">Skip introduction</button>
+  <p class="sr">Cinematic green terminal dialogue becomes a field of digits, a glowing tunnel, and LuckyLabs777. The numeric pattern is decorative, generated within your browser, and does not identify you.</p>
+  <noscript><style>.wordmark{opacity:1!important;filter:none!important;transform:none!important}.terminal{display:none!important}</style></noscript>
+</main>
+<script>
+(()=>{
+'use strict';
+const ACT=3330,END=6*ACT,RELEASE='cinematic-v0.7';
+const messages=['Wake up, Neo...','The Matrix has you...','Follow the white rabbit.'];
+const $=id=>document.getElementById(id);
+const rain=$('rain'),tunnel=$('tunnel'),r=rain.getContext('2d',{alpha:false}),p=tunnel.getContext('2d');
+const terminal=$('terminal'),numbers=$('numbers'),digits=$('digits'),wordmark=$('wordmark');
+const lines=[$('line0'),$('line1'),$('line2')],motion=matchMedia('(prefers-reduced-motion: reduce)');
+const typedNodes=lines.map(el=>{const n=document.createTextNode('');el.append(n);return n});
+const cursors=lines.map(el=>{const c=document.createElement('span');c.className='cursor';c.setAttribute('aria-hidden','true');c.hidden=true;el.append(c);return c});
+const glyphs=Array.from('0123456789ABCDEFGHJKLMNPQRSTVWXYZｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝ');
+const styles=[{size:13,step:20,density:.51,vel:[56,99],length:[18,37],opacity:.46},{size:19,step:25,density:.80,vel:[94,168],length:[24,48],opacity:.85},{size:27,step:49,density:.48,vel:[129,213],length:[18,38],opacity:.56}];
+const shades=['#05230d','#085b22','#129037','#21bf55','#55ee88','#b8ffd1','#f3fff5'];
+let W=1,H=1,dpr=1,streams=[],atlases=[],target='',cells=[],elapsed=0,origin=0,last=0,raf=0,running=false,complete=false,resizeQueued=false,frames=0;
+const rand=n=>Math.floor(Math.random()*n),between=(a,b)=>a+Math.random()*(b-a),pad=n=>String(n).padStart(2,'0');
+// Decorative number motif is derived in-browser from arrival time; it is never transmitted or persisted.
+const stamp=d=>pad(d.getMonth()+1)+pad(d.getDate())+pad(d.getHours())+pad(d.getMinutes())+pad(d.getSeconds());
+function atlas(size){
+ const padSize=Math.ceil(size*.36),w=Math.ceil(size*1.14)+padSize*2,h=w,c=document.createElement('canvas');
+ c.width=w*glyphs.length;c.height=h*shades.length*2;
+ const g=c.getContext('2d');g.textAlign='center';g.textBaseline='middle';g.font=`500 ${size}px "Yu Gothic","Meiryo","Noto Sans CJK JP",monospace`;
+ for(let flip=0;flip<2;flip++)for(let b=0;b<shades.length;b++)for(let i=0;i<glyphs.length;i++){
+  g.save();g.translate((i+.5)*w,(flip*shades.length+b+.5)*h);
+  if(flip && /[\uFF61-\uFF9F]/.test(glyphs[i]))g.scale(-1,1);
+  g.fillStyle=shades[b];if(b>3){g.shadowColor=shades[b];g.shadowBlur=b===6?size*.61:size*.33}
+  g.fillText(glyphs[i],0,0);g.restore();
+ }
+ return {canvas:c,w,h};
+}
+function size(){
+ const rect=rain.getBoundingClientRect();W=Math.max(1,rect.width);H=Math.max(1,rect.height);
+ dpr=Math.min(devicePixelRatio||1,W<520?1.25:1.35);
+ for(const cv of [rain,tunnel]){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr)}
+ if(!r)return;
+ r.setTransform(dpr,0,0,dpr,0,0);if(p)p.setTransform(dpr,0,0,dpr,0,0);
+ atlases=styles.map(s=>atlas(s.size));streams=[];
+ for(let layer=0;layer<styles.length;layer++){
+  const s=styles[layer];for(let i=0;i<Math.ceil(W/s.step)+2;i++){
+   if(Math.random()>s.density)continue;
+   const len=Math.floor(between(...s.length));
+   streams.push({layer,x:i*s.step+between(-s.step*.2,s.step*.2),head:between(-H,H*1.3),speed:between(...s.vel),len,
+    slot:Array.from({length:len+6},()=>rand(glyphs.length)),mirror:Math.random()>.39});
+  }
+ }
+ if(motion.matches)staticBrand();
+}
+function rainFrame(dt){
+ if(!r)return;
+ r.globalAlpha=1;r.fillStyle='#000400';r.fillRect(0,0,W,H);
+ for(const s of streams){
+  const cfg=styles[s.layer],a=atlases[s.layer];
+  if(dt>0){s.head+=dt*s.speed;if(s.head-s.len*cfg.size>H+90){s.head=-between(cfg.size,H*.6);s.speed=between(...cfg.vel)}
+    if(frames%4===0){const j=rand(s.slot.length);s.slot[j]=rand(glyphs.length)}}
+  const row=Math.floor(s.head/cfg.size);
+  for(let j=s.len-1;j>=0;j--){
+   const y=(row-j)*cfg.size;if(y<-cfg.size||y>H+cfg.size)continue;
+   const k=1-j/s.len,b=k>.99?6:k>.92?5:k>.72?4:k>.5?3:k>.24?2:1;
+   r.globalAlpha=cfg.opacity*(k*.79+.08);
+   const id=s.slot[((row-j)%s.slot.length+s.slot.length)%s.slot.length];
+   r.drawImage(a.canvas,id*a.w,((s.mirror?shades.length:0)+Math.min(s.layer===0?4:6,b))*a.h,a.w,a.h,s.x-a.w/2,y-a.h/2,a.w,a.h);
+  }
+ }
+ r.globalAlpha=1;
+}
+function codeTunnel(t){
+ if(!p)return;
+ p.clearRect(0,0,W,H);
+ const u=Math.max(0,Math.min(1,(t-4*ACT)/ACT));if(u<=0||u>=1)return;
+ const power=Math.pow(Math.sin(Math.PI*u),.54),cx=W*.5,cy=H*.5;
+ const n=W<600?21:32,steps=W<600?21:30,max=Math.hypot(W,H)*.82;
+ p.globalCompositeOperation='screen';
+ // Depth-mapped light bands: original perspective geometry, not sampled film imagery.
+ for(let i=0;i<n;i++){
+  const z=(i/n+u*2.5)%1,depth=.012+Math.pow(z,2.0)*1.12;
+  const rx=max*.96*depth,ry=max*.64*depth;
+  const alpha=Math.min(.9,power*(.27+z*.76));
+  if(i%4===0){
+   p.lineWidth=1.4+z*2.8;p.strokeStyle=`rgba(47,255,126,${alpha*.72})`;
+   p.beginPath();p.ellipse(cx,cy,rx,ry,0,-1.24,1.24);p.stroke();
+   p.beginPath();p.ellipse(cx,cy,rx,ry,0,Math.PI-1.24,Math.PI+1.24);p.stroke();
+  }
+  for(let k=0;k<steps;k++){
+   const angle=k/steps*Math.PI*2;
+   if(Math.abs(Math.cos(angle))<.22)continue;
+   const bend=1+Math.sin(angle*6+i*1.1+u*12)*.035;
+   const x=cx+Math.cos(angle)*rx*bend,y=cy+Math.sin(angle)*ry*bend;
+   if(x<-25||x>W+25||y<-25||y>H+25)continue;
+   const glint=(i*7+k*11)%39===0;
+   p.lineWidth=glint?2:1.1;
+   p.strokeStyle=glint?`rgba(205,255,218,${Math.min(1,alpha*2)})`:`rgba(45,244,117,${alpha})`;
+   p.beginPath();p.moveTo(x-Math.cos(angle)*(2+z*5),y-Math.sin(angle)*(2+z*4));
+   p.lineTo(x+Math.cos(angle)*(4+z*21),y+Math.sin(angle)*(4+z*18));p.stroke();
+  }
+ }
+ // Luminous sidewalls ripple inward around a dark central aperture.
+ for(const side of [-1,1]){
+  for(let k=0;k<17;k++){
+   const v=k/16,dx=W*(.075+.375*v),yWave=Math.sin(v*17+u*16+side)*H*.012;
+   p.strokeStyle=`rgba(56,255,135,${Math.min(.6,power*(.14+.44*v))})`;
+   p.lineWidth=1.6+v*3.2;p.beginPath();p.moveTo(cx+side*dx,cy-H*(.22+.25*v)+yWave);
+   p.bezierCurveTo(cx+side*dx*.7,cy-H*.13,cx+side*dx*.7,cy+H*.13,cx+side*dx,cy+H*(.22+.25*v)+yWave);p.stroke();
+  }
+ }
+ p.globalCompositeOperation='source-over';
+}
+function digitSetup(){
+ target=stamp(new Date());digits.replaceChildren();cells=Array.from({length:10},()=>{
+  const s=document.createElement('span');s.className='digit';s.textContent=String(rand(10));digits.append(s);return s;
+ });
+}
+function staticBrand(){
+ complete=true;elapsed=END;terminal.style.display='none';numbers.style.display='none';tunnel.style.display='none';rain.style.opacity='0';
+ wordmark.style.transition='none';wordmark.classList.add('visible');
+}
+function drawIntro(t){
+ const act=Math.min(5,Math.floor(t/ACT)),progress=Math.min(1,Math.max(0,(t-act*ACT)/ACT));
+ // Acts 1-3: three crisp messages, each given 3.33 seconds.
+ if(t<3*ACT){
+  terminal.style.opacity='1';rain.style.opacity='0';numbers.style.opacity='0';tunnel.style.opacity='0';
+  for(let i=0;i<3;i++){
+   const age=t-i*ACT;
+   const typed=age<0?'':age<ACT?messages[i].slice(0,Math.floor(Math.min(1,age/2100)*messages[i].length)):messages[i];
+   if(typedNodes[i].data!==typed)typedNodes[i].data=typed;
+   cursors[i].hidden=!(i===act&&age>=0);
+  }
+  return;
+ }
+ // Act 4: terminal disappears into numeric code; ten digits converge and lock.
+ if(t<4*ACT){
+  const a=(t-3*ACT)/ACT;
+  for(let i=0;i<3;i++){typedNodes[i].data=messages[i];cursors[i].hidden=true}
+  terminal.style.opacity=String(Math.max(0,1-a*3.5));
+  rain.style.opacity=String(Math.min(.94,a*2));
+  numbers.style.opacity=String(Math.min(1,a*3));
+  digits.style.transform=`scale(${(1+.12*a).toFixed(3)})`;
+  for(let i=0;i<10;i++){
+   const lock=290+i*290;
+   if(t-3*ACT>=lock){cells[i].textContent=target[i];cells[i].classList.add('locked')}
+   else if(frames%2===0)cells[i].textContent=String(rand(10));
+  }
+  return;
+ }
+ // Act 5: code falls toward the viewer and folds into a luminous portal.
+ if(t<5*ACT){
+  const a=(t-4*ACT)/ACT;
+  terminal.style.opacity='0';rain.style.opacity=String(.94-.22*a);
+  numbers.style.opacity=String(Math.max(0,1-a*4));
+  rain.style.transform=`scale(${(1+a*.37).toFixed(3)})`;
+  tunnel.style.opacity=String(Math.min(1,Math.sin(Math.PI*a)*1.28));
+  codeTunnel(t);return;
+ }
+ // Act 6: the light collapses and LuckyLabs777 emerges for 3.33 seconds.
+ terminal.style.opacity='0';numbers.style.opacity='0';
+ rain.style.opacity=String(.7+.14*progress);rain.style.transform=`scale(${(1.37-.25*progress).toFixed(3)})`;
+ tunnel.style.opacity=String(Math.max(0,1-progress*4));
+ if(p)p.clearRect(0,0,W,H);
+ if(!wordmark.classList.contains('visible'))wordmark.classList.add('visible');
+ if(t>=END){complete=true;terminal.style.display='none';numbers.style.display='none';tunnel.style.opacity='0'}
+}
+function tick(now){
+ if(!running)return;
+ raf=requestAnimationFrame(tick);
+ if(document.hidden||motion.matches){last=0;return}
+ if(last&&now-last<(complete?50:33))return;
+ const dt=last?Math.min(.07,(now-last)/1000):0;last=now;
+ elapsed=now-origin;frames++;
+ drawIntro(Math.min(END,elapsed));
+ if(elapsed>=3*ACT||complete)rainFrame(dt);
+}
+function start(){if(running||motion.matches)return;origin=performance.now()-elapsed;last=0;running=true;raf=requestAnimationFrame(tick)}
+function stop(){if(!running)return;elapsed=Math.min(END,performance.now()-origin);cancelAnimationFrame(raf);running=false;last=0}
+function skip(){staticBrand();if(p)p.clearRect(0,0,W,H)}
+$('skip').addEventListener('click',skip);
+addEventListener('resize',()=>{if(resizeQueued)return;resizeQueued=true;requestAnimationFrame(()=>{resizeQueued=false;size()})},{passive:true});
+function onMotion(){if(motion.matches){stop();skip()}else{size();start()}}
+if(motion.addEventListener)motion.addEventListener('change',onMotion);else motion.addListener(onMotion);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();else start()});
+addEventListener('pagehide',stop);
+addEventListener('pageshow',e=>{if(e.persisted&&!document.hidden)start()});
+digitSetup();
+if(r){size();if(motion.matches)skip();else start()}else staticBrand();
+})();
+</script>
 </body>
 </html>
